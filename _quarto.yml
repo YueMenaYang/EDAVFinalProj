@@ -6,7 +6,7 @@ execute:
   echo: true
 
 book:
-  title: "EDAVFinalProj"
+  title: "Insights into U.S. Electric Vehicle Population"
   author:
     - Yue Yang (yy3532)
     - Jingxi Feng (jf3670)
