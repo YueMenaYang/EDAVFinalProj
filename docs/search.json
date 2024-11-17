@@ -2,9 +2,9 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "EDAVFinalProj",
+    "title": "Insights into U.S. Electric Vehicle Population",
     "section": "",
-    "text": "1 Introduction",
+    "text": "1 Introduction\nElectric Vehicles (EVs) are becoming more popular as people look for new and efficient ways to travel. EVs are cars that run partly or fully on electricity. Unlike traditional cars that use gas, EVs are powered by batteries and are more energy-efficient. The EV market in the U.S. is growing quickly, helped by falling battery prices, government support, and better charging infrastructure.\nWhile many focus on how EVs help the environment, this project looks at something different: the sales and number of EVs in the United States. By studying data on EV registrations/counts, fuel prices through time, and charging stations, this project will explore how EV market or counts are changing in different parts of the United States.\nWe chose this topic because population of EVs show how the car industry is changing and how people’s preferences are shifting. Studying the counts of EVs can reveal important trends, challenges, and opportunities that can help businesses, governments, and buyers understand where the market is headed and how they are influenced by various factors.\nThis project will answer questions like:\nHow have EV counts changed over time in different states and regions?\nHow the counts of different EV brands are distributed in a specific state?\nWhat is the difference in counts between Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs)?\nHow do factors like the number of charging stations and fuel prices affect EV sales?\n…..",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
