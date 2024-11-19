@@ -97,6 +97,7 @@ ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) 
   ) +
   theme_minimal()
 ```
+
 ```{r}
 missing_df <- missing_df[order(-missing_df$MissingValues), ]
 print(missing_df)
