@@ -44,7 +44,7 @@ This shows the number of vehicles that were registered by the Washington State D
 
 ## Missing value analysis
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 ```
