@@ -316,6 +316,8 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </div>
+<p>Several columns have a significant number of missing values, with many showing over 60,000 missing entries. These likely represent fields that are either rarely applicable or not consistently reported across all charging stations, like RD.Blended.with.Biodiesel or CNG.Storage.Capacity. Missing values might also correlate with station type, location, or infrastructure differences. For example: Urban areas may have more complete data for public-facing fields. Columns like E85.Other.Ethanol.Blends, Hydrogen.Pressures, or NG.Fill.Type.Primary have extremely high proportions of missing values because these fields pertain to specialized infrastructure that is only applicable to certain types of stations.</p>
+<p>Core information columns such as ZIP, Updated.At, Street.Address, Station.Name, City, State, and Latitude/Longitude have no missing values (or very few). These are likely required fields for each charging station, making them consistently reported.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -429,6 +431,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </div>
+<p>We cleaned the data by: 1. Deleting the columns that are not important to our questions and choosing only the columns/features that we care about. For example: City, State, Restricted.Access. 2. In the new dataset with the selected columns, we deleted rows with NA values. After the process, we can see that there’s no missing value.</p>
 <ol start="3" type="1">
 <li>Electric Vehicle Population Data in the State of Washington</li>
 </ol>
@@ -466,6 +469,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </div>
+<p>Fields with many missing vlaues like Legislative district might depend on accurate geolocation, which may not always be available. The column Vehicle.Location has a moderate level of missing values, which might only be relevant for certain vehicle records or might face challenges in data reporting. The other columns have little or no missing values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -494,6 +498,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </div>
+<p>We cleaned the data similarly to what we did on dataset 3. We chose the columns that we care by deleting the columns that are not important to this project. Then we deleted the rows containing NA values. After the clearning, we can see that there are no missing values.</p>
 <p>4.Electric Vehicle Population Size History By County in the State of Washington</p>
 <div class="cell">
 <details class="code-fold">
@@ -529,6 +534,8 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </div>
+<p>Both the State and County columns have a significant number of missing values. These two columns are important to our topic, so we didn’t delete them like what we did on the previous dataset.<br>
+All other columns appear to have no missing values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -556,6 +563,7 @@ Attaching package: 'dplyr'</code></pre>
 </div>
 </div>
 </div>
+<p>Though the number of missing values for columns State and County are relatively higher than the other columns, comparing to the total number of row, deleting the those missing values won’t cause a significant data loss. Therefore, we deleted them.</p>
 
 
 </section>
