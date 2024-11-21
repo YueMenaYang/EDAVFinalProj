@@ -44,7 +44,7 @@ This shows the number of vehicles that were registered by the Washington State D
 
 ## Missing value analysis
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
 ```
@@ -52,7 +52,7 @@ library(dplyr)
 1. Alternative Fuel Price Report in the US
 ```{r}
 # Datset name: fuel_prices_average
-file_path <- "/Users/mena/Desktop/School/ColumbiaMaster/STAT5702/FinalProj/fuel_prices.csv"
+file_path <- "data/fuel_prices.csv"
 data <- read.csv(file_path, stringsAsFactors = FALSE)
 
 fuel_prices_average <- data[-1, ] # Remove first row (extra header information)
@@ -75,7 +75,7 @@ There are no missing values.
 
 2. Charge Station Data in the US 
 ```{r}
-file_path <- "/Users/mena/Desktop/School/ColumbiaMaster/STAT5702/FinalProj/fuel_Charging_Station.csv"
+file_path <- "data/fuel_Charging_Station.csv"
 data <- read.csv(file_path, stringsAsFactors = FALSE)
 data[data == ""] <- NA
 chargStat <- data
@@ -135,7 +135,7 @@ After the process, we can see that there's no missing value.
 
 3. Electric Vehicle Population Data in the State of Washington
 ```{r}
-file_path <- "/Users/mena/Desktop/School/ColumbiaMaster/STAT5702/FinalProj/washington_EV_Pop.csv"
+file_path <- "data/washington_EV_Pop.csv"
 data <- read.csv(file_path, stringsAsFactors = FALSE)
 data[data == ""] <- NA
 wash_EV_pop <- data
@@ -183,7 +183,7 @@ We cleaned the data similarly to what we did on dataset 3. We chose the columns 
 
 4.Electric Vehicle Population Size History By County in the State of Washington
 ```{r}
-file_path <- "/Users/mena/Desktop/School/ColumbiaMaster/STAT5702/FinalProj/wash_EVPop_Hist_County.csv"
+file_path <- "data/wash_EVPop_Hist_County.csv"
 data <- read.csv(file_path, stringsAsFactors = FALSE)
 data[data == ""] <- NA
 wash_EVpop_hist <- data
