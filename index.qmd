@@ -8,6 +8,8 @@ We chose this topic because population of EVs show how the car industry is chang
 
 This project will answer questions like:
 
+What is general look of EV market, and what factors affect it ? 
+
 How have EV counts changed over time in different states and regions?
 
 How the counts of different EV brands are distributed in a specific state? 
