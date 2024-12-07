@@ -1,1 +1,14 @@
 # Results
+```{r}
+df_fuel_station <- read.csv("data/fuel_Charging_Station.csv",stringsAsFactors = FALSE)
+de_prices <- read.csv('data/fuel_prices.csv',stringsAsFactors = FALSE)
+df_wash_EVpop_Hist_Country <- read.csv('data/wash_EVPop_Hist_County.csv',stringsAsFactors = FALSE)
+df_washington_EV_pop <-  read.csv('data/washington_EV_pop.csv',stringsAsFactors = FALSE)
+```
+
+
+```{r}
+
+```
+
+
