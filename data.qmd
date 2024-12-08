@@ -111,8 +111,19 @@ print(missing_df)
 ```
 
 
+
+
 ```{r, fig.width=10, fig.height=5}
-chargStat_selected <- chargStat[, c("Fuel.Type.Code", "Station.Name", "City", "State", "ZIP", "Groups.With.Access.Code", "Access.Days.Time", "Date.Last.Confirmed", "Open.Date", "Restricted.Access")]
+
+chargStat <- chargStat |>
+  mutate(
+    EV.Level1.EVSE.Num = ifelse(is.na(EV.Level1.EVSE.Num), 0, EV.Level1.EVSE.Num),
+    EV.Level2.EVSE.Num = ifelse(is.na(EV.Level2.EVSE.Num), 0, EV.Level2.EVSE.Num),
+    EV.DC.Fast.Count = ifelse(is.na(EV.DC.Fast.Count), 0, EV.DC.Fast.Count)
+  )
+
+
+chargStat_selected <- chargStat[, c("Fuel.Type.Code", "Station.Name", "City", "State", "ZIP", "Groups.With.Access.Code", "Access.Days.Time", "Date.Last.Confirmed", "Open.Date", "Restricted.Access","EV.Level1.EVSE.Num", "EV.Level2.EVSE.Num", "EV.DC.Fast.Count")]
 chargStat_selected <- na.omit(chargStat_selected)
 
 missing_values <- colSums(is.na(chargStat_selected))
