@@ -47,6 +47,7 @@ This shows the number of vehicles that were registered by the Washington State D
 ```{r message=FALSE, warning=FALSE}
 library(ggplot2)
 library(dplyr)
+library(readr)
 ```
 
 1. Alternative Fuel Price Report in the US
@@ -55,16 +56,15 @@ library(dplyr)
 file_path <- "data/fuel_prices.csv"
 data <- read.csv(file_path, stringsAsFactors = FALSE)
 
-fuel_prices_average <- data[-1, ] # Remove first row (extra header information)
+fuel_prices_average <- data[-1, ] 
 fuel_prices_average <- fuel_prices_average[, -1] 
-colnames(fuel_prices_average) <- fuel_prices_average[1, ] # Set proper column names
-fuel_prices_average <- fuel_prices_average[-1, ] # Remove row with column names
+colnames(fuel_prices_average) <- fuel_prices_average[1, ] 
+fuel_prices_average <- fuel_prices_average[-1, ]
 ```
 
 ```{r}
 missing_values <- colSums(is.na(fuel_prices_average))
 
-# Plot missing values (before handling)
 missing_df <- data.frame(Column = names(missing_values), MissingValues = missing_values)
 ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) +
   geom_bar(stat = "identity", fill = "steelblue") +
@@ -126,6 +126,8 @@ ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) 
     y = "Count of Missing Values"
   ) +
   theme_minimal()
+
+write_csv(chargStat_selected, "data/chargStat_selected.csv")
 ```
 
 We cleaned the data by:
@@ -176,6 +178,8 @@ ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) 
     y = "Count of Missing Values"
   ) +
   theme_minimal()
+
+write_csv(wash_EV_pop_sel, "data/wash_EV_pop_sel.csv")
 ```
 
 We cleaned the data similarly to what we did on dataset 3. We chose the columns that we care by deleting the columns that are not important to this project. Then we deleted the rows containing NA values. After the clearning, we can see that there are no missing values. 
@@ -208,9 +212,9 @@ Both the State and County columns have a significant number of missing values. T
 All other columns appear to have no missing values.
 
 ```{r}
-wash_EVpop_hist <- na.omit(wash_EVpop_hist)
+wash_EVpop_hist_sel <- na.omit(wash_EVpop_hist)
 
-missing_values <- colSums(is.na(wash_EVpop_hist))
+missing_values <- colSums(is.na(wash_EVpop_hist_sel))
 missing_df <- data.frame(Column = names(missing_values), MissingValues = missing_values)
 rownames(missing_df) <- NULL
 
@@ -223,5 +227,7 @@ ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) 
     y = "Count of Missing Values"
   ) +
   theme_minimal()
+
+write_csv(wash_EVpop_hist_sel, "data/wash_EVpop_hist_sel.csv")
 ```
 Though the number of missing values for columns State and County are relatively higher than the other columns, comparing to the total number of row, deleting the those missing values won't cause a significant data loss. Therefore, we deleted them. 

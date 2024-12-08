@@ -1,14 +1,65 @@
 # Results
+
+```{r message=FALSE, warning=FALSE}
+library(dplyr)
+library(readr)
+library(ggplot2)
+```
+
 ```{r}
-df_fuel_station <- read.csv("data/fuel_Charging_Station.csv",stringsAsFactors = FALSE)
-de_prices <- read.csv('data/fuel_prices.csv',stringsAsFactors = FALSE)
-df_wash_EVpop_Hist_Country <- read.csv('data/wash_EVPop_Hist_County.csv',stringsAsFactors = FALSE)
-df_washington_EV_pop <-  read.csv('data/washington_EV_pop.csv',stringsAsFactors = FALSE)
+fuel_prices_average <- read.csv("data/fuel_prices.csv",stringsAsFactors = FALSE)
+chargStat_selected <- read.csv("data/chargStat_selected.csv", stringsAsFactors = FALSE)
+wash_EV_pop_sel <- read.csv("data/wash_EV_pop_sel.csv", stringsAsFactors = FALSE)
+wash_EVpop_hist_sel <- read.csv("data/wash_EVpop_hist_sel.csv", stringsAsFactors = FALSE)
 ```
 
 
+(3) Electric Vehicle Population Data in the State of Washington
 ```{r}
+ev_type_counts <- wash_EV_pop_sel |>
+  count(Electric.Vehicle.Type) |>
+  mutate(percentage = n / sum(n) * 100)
 
+ggplot(ev_type_counts, aes(x = "", y = percentage, fill = Electric.Vehicle.Type)) +
+  geom_bar(stat = "identity", width = 1) +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  labs(
+    title = "Distribution of EV Types",
+    fill = "EV Type"
+  ) +
+  geom_text(aes(label = paste0(round(percentage, 1), "%")), 
+            position = position_stack(vjust = 0.5))
 ```
 
+```{r}
+make_counts <- wash_EV_pop_sel|>
+  count(Make) |>
+  arrange(desc(n)) |>
+  mutate(Make = factor(Make, levels = Make)) 
+
+threshold <- 500
+make_counts <- make_counts |>
+  mutate(Make = ifelse(n < threshold, "OTHER", as.character(Make))) |>
+  group_by(Make) |>
+  summarise(n = sum(n)) |>
+  arrange(desc(n)) |>
+  mutate(Make = factor(Make, levels = Make))
+
+ggplot(make_counts, aes(x = Make, y = n, fill = n)) +
+  geom_bar(stat = "identity") +
+  scale_fill_gradient(low = "lightgreen", high = "darkgreen") +
+  theme_minimal() +
+  labs(
+    title = "Distribution of Vehicle Makes",
+    x = "Vehicle Make",
+    y = "Count",
+    fill = "Count"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    axis.title = element_text(size = 12),
+    plot.title = element_text(size = 14, face = "bold")
+  )
+```
 
