@@ -263,6 +263,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(fuel_prices_average, <span class="st">"data/fuel_prices_average.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <p>There are no missing values.</p>
 <ol start="2" type="1">
@@ -271,28 +275,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/fuel_Charging_Station.csv"</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>chargStat <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/fuel_Charging_Station.csv"</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>chargStat <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(chargStat))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(chargStat))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -307,8 +311,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> missing_df[<span class="fu">order</span>(<span class="sc">-</span>missing_df<span class="sc">$</span>MissingValues), ]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(missing_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> missing_df[<span class="fu">order</span>(<span class="sc">-</span>missing_df<span class="sc">$</span>MissingValues), ]</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(missing_df)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>                                    Column MissingValues
@@ -392,22 +396,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>chargStat_selected <span class="ot">&lt;-</span> chargStat[, <span class="fu">c</span>(<span class="st">"Fuel.Type.Code"</span>, <span class="st">"Station.Name"</span>, <span class="st">"City"</span>, <span class="st">"State"</span>, <span class="st">"ZIP"</span>, <span class="st">"Groups.With.Access.Code"</span>, <span class="st">"Access.Days.Time"</span>, <span class="st">"Date.Last.Confirmed"</span>, <span class="st">"Open.Date"</span>, <span class="st">"Restricted.Access"</span>)]</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>chargStat_selected <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(chargStat_selected)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(chargStat_selected))</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>chargStat_selected <span class="ot">&lt;-</span> chargStat[, <span class="fu">c</span>(<span class="st">"Fuel.Type.Code"</span>, <span class="st">"Station.Name"</span>, <span class="st">"City"</span>, <span class="st">"State"</span>, <span class="st">"ZIP"</span>, <span class="st">"Groups.With.Access.Code"</span>, <span class="st">"Access.Days.Time"</span>, <span class="st">"Date.Last.Confirmed"</span>, <span class="st">"Open.Date"</span>, <span class="st">"Restricted.Access"</span>)]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>chargStat_selected <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(chargStat_selected)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(chargStat_selected))</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -418,7 +422,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(chargStat_selected, <span class="st">"data/chargStat_selected.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(chargStat_selected, <span class="st">"data/chargStat_selected.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We cleaned the data by: 1. Deleting the columns that are not important to our questions and choosing only the columns/features that we care about. For example: City, State, Restricted.Access. 2. In the new dataset with the selected columns, we deleted rows with NA values. After the process, we can see that there’s no missing value.</p>
@@ -428,28 +432,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/washington_EV_Pop.csv"</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>wash_EV_pop <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/washington_EV_Pop.csv"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>wash_EV_pop <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EV_pop))</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EV_pop))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -463,22 +467,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>wash_EV_pop_sel <span class="ot">&lt;-</span> wash_EV_pop[, <span class="sc">!</span>(<span class="fu">names</span>(wash_EV_pop) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Legislative.District"</span>, <span class="st">"Vehicle.Location"</span>, <span class="st">"Base.MSRP"</span>, <span class="st">"X2020.Census.Tract"</span>, <span class="st">"DOL.Vehicle.ID"</span>))]</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>wash_EV_pop_sel <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(wash_EV_pop_sel)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EV_pop_sel))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>wash_EV_pop_sel <span class="ot">&lt;-</span> wash_EV_pop[, <span class="sc">!</span>(<span class="fu">names</span>(wash_EV_pop) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Legislative.District"</span>, <span class="st">"Vehicle.Location"</span>, <span class="st">"Base.MSRP"</span>, <span class="st">"X2020.Census.Tract"</span>, <span class="st">"DOL.Vehicle.ID"</span>))]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>wash_EV_pop_sel <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(wash_EV_pop_sel)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EV_pop_sel))</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -489,7 +493,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(wash_EV_pop_sel, <span class="st">"data/wash_EV_pop_sel.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(wash_EV_pop_sel, <span class="st">"data/wash_EV_pop_sel.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>We cleaned the data similarly to what we did on dataset 3. We chose the columns that we care by deleting the columns that are not important to this project. Then we deleted the rows containing NA values. After the clearning, we can see that there are no missing values.</p>
@@ -497,28 +501,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/wash_EVPop_Hist_County.csv"</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>wash_EVpop_hist <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/wash_EVPop_Hist_County.csv"</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>wash_EVpop_hist <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EVpop_hist))</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EVpop_hist))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -533,21 +537,21 @@ All other columns appear to have no missing values.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>wash_EVpop_hist_sel <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(wash_EVpop_hist)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EVpop_hist_sel))</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wash_EVpop_hist_sel <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(wash_EVpop_hist)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EVpop_hist_sel))</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -558,7 +562,7 @@ All other columns appear to have no missing values.</p>
 </div>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(wash_EVpop_hist_sel, <span class="st">"data/wash_EVpop_hist_sel.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(wash_EVpop_hist_sel, <span class="st">"data/wash_EVpop_hist_sel.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Though the number of missing values for columns State and County are relatively higher than the other columns, comparing to the total number of row, deleting the those missing values won’t cause a significant data loss. Therefore, we deleted them.</p>

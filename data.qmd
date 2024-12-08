@@ -70,6 +70,8 @@ ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) 
   geom_bar(stat = "identity", fill = "steelblue") +
   coord_flip() +
   labs(title = "Missing Values Per Column (Before Handling)", x = "Columns", y = "Count of Missing Values")
+
+write_csv(fuel_prices_average, "data/fuel_prices_average.csv")
 ```
 There are no missing values. 
 

@@ -7,7 +7,7 @@ library(ggplot2)
 ```
 
 ```{r}
-fuel_prices_average <- read.csv("data/fuel_prices.csv",stringsAsFactors = FALSE)
+fuel_prices_average <- read.csv("data/fuel_prices_average.csv",stringsAsFactors = FALSE)
 chargStat_selected <- read.csv("data/chargStat_selected.csv", stringsAsFactors = FALSE)
 wash_EV_pop_sel <- read.csv("data/wash_EV_pop_sel.csv", stringsAsFactors = FALSE)
 wash_EVpop_hist_sel <- read.csv("data/wash_EVpop_hist_sel.csv", stringsAsFactors = FALSE)
