@@ -4,6 +4,7 @@
 library(dplyr)
 library(readr)
 library(ggplot2)
+library(tidyverse)
 ```
 
 ```{r}
@@ -14,7 +15,321 @@ wash_EVpop_hist_sel <- read.csv("data/wash_EVpop_hist_sel.csv", stringsAsFactors
 ```
 
 
-(3) Electric Vehicle Population Data in the State of Washington
+(pic) Timeseries Fuel Price (Gasoline, E85, CNG, Propane., Diesel)
+```{r, warning=FALSE}
+fuel_prices_average <- fuel_prices_average |>
+  mutate(across(
+    c(Gasoline, E85, CNG, LNG, Propane., Diesel, B20, B99.B100),
+    ~ as.numeric(gsub("[^0-9.]", "", .))  # Remove non-numeric characters like '$'
+  ))
+
+
+na_summary <- sapply(fuel_prices_average[c("Gasoline", "E85", "CNG", "LNG", "Propane.", "Diesel", "B20", "B99.B100")], function(x) sum(is.na(x)))
+
+# Convert Report.Date to Date format
+fuel_prices_average <- fuel_prices_average %>%
+  mutate(Report.Date = as.Date(Report.Date, format = "%m/%d/%y"))
+
+```
+
+```{r,warning=FALSE}
+
+
+ggplot(fuel_prices_average, aes(x = Report.Date)) +
+  geom_line(aes(y = Gasoline, color = "Gasoline"), linewidth = 0.5) +
+  geom_line(aes(y = E85, color = "E85"), linewidth = 0.5) +
+  geom_line(aes(y = CNG, color = "CNG"), linewidth = 0.5) +
+  geom_line(aes(y = Propane., color = "Propane"), linewidth = 0.5) +
+  geom_line(aes(y = Diesel, color = "Diesel"), linewidth = 0.5) +
+  labs(
+    title = "Time Series of Gasolino, E85, CNG, Propane, and Diesel",
+    x = "Date",
+    y = "Price (USD)",
+    color = "Fuel Type"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
+  )
+```
+
+(pic) Moving Average of Time Series of Fuel to hightlight change (k = 4 to caculate each 1 to 2 average since our indices of date is more likely break by half or one third of the year)
+```{r}
+
+
+fuel_prices_MA <- fuel_prices_average |>
+  mutate(
+    Gasoline_MA = zoo::rollmean(Gasoline, k = 4, fill = NA, align = "right"),
+    E85_MA = zoo::rollmean(E85, k = 4, fill = NA, align = "right"),
+    CNG_MA = zoo::rollmean(CNG, k = 4, fill = NA, align = "right"),
+    Propane_MA = zoo::rollmean(Propane., k = 4, fill = NA, align = "right"),
+    Diesel_MA = zoo::rollmean(Diesel, k = 4, fill = NA, align = "right")
+  )
+
+
+fuel_prices_MA_filtered <- fuel_prices_MA |>
+  filter(!is.na(Gasoline_MA) | !is.na(E85_MA) | !is.na(CNG_MA) | 
+         !is.na(Propane_MA) | !is.na(Diesel_MA))
+
+ggplot(fuel_prices_MA_filtered, aes(x = Report.Date)) +
+  geom_line(aes(y = Gasoline_MA, color = "Gasoline"), size = 1,linetype = "dashed") +
+  geom_line(aes(y = E85_MA, color = "E85"), size = 1,linetype = "dashed") +
+  geom_line(aes(y = CNG_MA, color = "CNG"), size = 1,linetype = "dashed") +
+  geom_line(aes(y = Propane_MA, color = "Propane"), size = 1,linetype = "dashed") +
+  geom_line(aes(y = Diesel_MA, color = "Diesel"), size = 1,linetype = "dashed") +
+  labs(
+    title = "2 years Moving Average of Fuel Prices (Filtered)",
+    x = "Date",
+    y = "Price (USD)",
+    color = "Fuel Type"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
+  )
+```
+
+
+
+
+(pic) Electric Vehicle Chargers (in Fuel Station) distribution 
+
+```{r}
+state_distribution <- chargStat_selected |>
+  group_by(State) |>
+  summarise(Count = n()) |>
+  mutate(Percentage = Count / sum(Count) * 100) |>
+  arrange(desc(Percentage))
+
+
+ggplot(state_distribution, aes(x = reorder(State, -Percentage), y = Percentage, fill = Percentage)) +
+  geom_bar(stat = "identity", color = "black") +  
+  labs(title = "Percentage of EV chargers in fuel Stations by State",
+       x = "State",
+       y = "Percentage (%)") +
+  theme_minimal() +
+  scale_fill_gradient(low = "lightblue", high = "darkblue", name = "Ranking") + 
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")),
+            position = position_stack(vjust = 0.5), size =1.5, color = "white")  
+```
+
+
+
+(pic) Different Charger Type in Each state counts
+
+
+```{r}
+charger_type_distribution <- chargStat_selected |>
+  group_by(State) |>
+  summarise(
+    Level1_Chargers = sum(EV.Level1.EVSE.Num, na.rm = TRUE),
+    Level2_Chargers = sum(EV.Level2.EVSE.Num, na.rm = TRUE),
+    DC_Fast_Chargers = sum(EV.DC.Fast.Count, na.rm = TRUE)
+  ) |>
+  pivot_longer(
+    cols = c(Level1_Chargers, Level2_Chargers, DC_Fast_Chargers),
+    names_to = "Charger.Type",
+    values_to = "Total_Count"
+  ) |>
+  arrange(desc(Total_Count))
+
+
+charger_level1 <- charger_type_distribution |>
+  filter(Charger.Type == "Level1_Chargers") |>
+  arrange(desc(Total_Count))
+
+charger_level2 <- charger_type_distribution |>
+  filter(Charger.Type == "Level2_Chargers") |>
+  arrange(desc(Total_Count))
+
+charger_dc_fast <- charger_type_distribution |>
+  filter(Charger.Type == "DC_Fast_Chargers") |>
+  arrange(desc(Total_Count))
+
+
+ggplot(charger_level1, aes(x = reorder(State, -Total_Count), y = Total_Count, fill = Total_Count)) +
+  geom_bar(stat = "identity", color = "white") +
+  labs(
+    title = "EV Level1 EVSE Num by State",
+    x = "State",
+    y = "Total Count"
+  ) +
+  scale_fill_viridis_c(option = "D", direction = -1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+ggplot(charger_level2, aes(x = reorder(State, -Total_Count), y = Total_Count, fill = Total_Count)) +
+  geom_bar(stat = "identity", color = "white") +
+  labs(
+    title = "EV Level2 EVSE Num by State",
+    x = "State",
+    y = "Total Count"
+  ) +
+  scale_fill_viridis_c(option = "D", direction = -1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+
+ggplot(charger_dc_fast, aes(x = reorder(State, -Total_Count), y = Total_Count, fill = Total_Count)) +
+  geom_bar(stat = "identity", color = "white") +
+  labs(
+    title = "EV DC Fast Chargers by State",
+    x = "State",
+    y = "Total Count"
+  ) +
+  scale_fill_viridis_c(option = "D", direction = -1) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+```
+
+(pic) Facet with most popular chargers type: Level 2 Chargers and DC Fast Chargers
+
+```{r}
+level2_and_fast_distribution <- chargStat_selected |>
+  select(State, EV.Level2.EVSE.Num, EV.DC.Fast.Count) |>
+  pivot_longer(
+    cols = c(EV.Level2.EVSE.Num, EV.DC.Fast.Count),
+    names_to = "Charger.Type",
+    values_to = "Count"
+  ) |>
+  group_by(State, Charger.Type) |>
+  summarise(Total_Count = sum(Count), .groups = "drop") |>
+  arrange(Charger.Type, desc(Total_Count))
+
+# Create faceted bar plot
+ggplot(level2_and_fast_distribution, aes(x = reorder(State, Total_Count), y = Total_Count, fill = Total_Count)) +
+  geom_bar(stat = "identity", color = "white") +
+  facet_wrap(~ Charger.Type, scales = "free_y") +
+  coord_flip() +
+  labs(
+    title = "Level 2 and DC Fast Charger Distribution by State",
+    x = "State",
+    y = "Total Count",
+    fill = "Charger Count"
+  ) +
+  scale_fill_viridis_c(option = "D", direction = -1)+
+  theme_minimal() +
+  theme(
+    axis.text.y = element_text(size = 8),
+    strip.text = element_text(size = 10, face = "bold")
+  )
+```
+
+
+(pic) Access time of the charger station in Total (24 hrs vs Not 24 hrs)
+
+```{r}
+access_time_grouped <- chargStat_selected |>
+  mutate(
+    Access_Group = ifelse(grepl("^24 hours daily", Access.Days.Time), "24 Hours", "non 24 hours")
+  )
+
+
+overall_distribution <- access_time_grouped |>
+  group_by(Access_Group) |>
+  summarise(Count = n(), .groups = "drop") |>
+  mutate(Percentage = (Count / sum(Count)) * 100)
+
+
+ggplot(overall_distribution, aes(x = "", y = Percentage, fill = Access_Group)) +
+  geom_bar(stat = "identity", width = 1, color = "white") +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")), 
+            position = position_stack(vjust = 0.5), size = 5, color = "white") +
+  labs(
+    title = "Distribution of EV Chargers Access Time (U.S)",
+    fill = "Access Group"
+  ) +
+  theme_void() +
+  scale_fill_manual(values = c("24 Hours" = "dodgerblue", "non 24 hours" = "tomato"))
+
+```
+
+
+
+
+(pic) 24hrs chargers distribution within each state
+```{r}
+
+# Calculate the state-level distribution
+state_access_distribution <- access_time_grouped |> 
+  group_by(State, Access_Group) |> 
+  summarise(Count = n(), .groups = "drop") |> 
+  group_by(State) |> 
+  mutate(Percentage = (Count / sum(Count)) * 100)
+
+
+# Order states by the count of "24 Hours" access group
+state_order <- state_access_distribution |>
+  filter(Access_Group == "24 Hours") |>
+  arrange(desc(Percentage)) |>
+  pull(State)
+
+# Create the bar graph with reordered states
+ggplot(state_access_distribution, aes(x = factor(State, levels = state_order), y = Percentage, fill = Access_Group)) +
+  geom_bar(stat = "identity", position = "stack", color = "white") +
+  labs(
+    title = "State-Level Distribution of Access Times in EV Charger Stations (24 Hours Ranked)",
+    x = "State",
+    y = "Percentage (%)",
+    fill = "Access Group"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
+  ) +
+  scale_fill_manual(values = c("24 Hours" = "dodgerblue", "non 24 hours" = "tomato"))
+```
+
+
+
+
+
+(pic) True or False of the Restrict Access of Charge Station 
+
+```{r}
+# Calculate the percentage of true and false for Restricted.Access in each state
+access_distribution <- chargStat_selected |>
+  group_by(State, Restricted.Access) |>
+  summarise(Count = n(), .groups = "drop") |>
+  group_by(State) |>
+  mutate(Percentage = (Count / sum(Count)) * 100)
+
+# Filter the `true` percentages to determine the ordering
+state_order <- access_distribution |>
+  filter(Restricted.Access == "true") |>
+  arrange(desc(Percentage)) |>
+  pull(State)
+
+# Create a bar graph to display the distribution
+ggplot(access_distribution, aes(x = factor(State, levels = state_order), y = Percentage, fill = Restricted.Access)) +
+  geom_bar(stat = "identity", position = "stack", color = "white") +
+  labs(
+    title = "Distribution of True and False Restricted Access by State",
+    x = "State",
+    y = "Percentage (%)",
+    fill = "Restricted Access of Charge Station"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
+  ) +
+  scale_fill_manual(values = c("true" = "dodgerblue", "false" = "tomato"))
+```
+
+
+
+
+
+
+(pic) Electric Vehicle Population Data in the State of Washington
 ```{r}
 ev_type_counts <- wash_EV_pop_sel |>
   count(Electric.Vehicle.Type) |>
@@ -31,7 +346,7 @@ ggplot(ev_type_counts, aes(x = "", y = percentage, fill = Electric.Vehicle.Type)
   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
             position = position_stack(vjust = 0.5))
 ```
-
+(pic)
 ```{r}
 make_counts <- wash_EV_pop_sel|>
   count(Make) |>
