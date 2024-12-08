@@ -4,6 +4,9 @@
 library(dplyr)
 library(readr)
 library(ggplot2)
+library(scales)
+library(ggrepel)
+library(tidyr)
 ```
 
 ```{r}
@@ -12,6 +15,64 @@ chargStat_selected <- read.csv("data/chargStat_selected.csv", stringsAsFactors =
 wash_EV_pop_sel <- read.csv("data/wash_EV_pop_sel.csv", stringsAsFactors = FALSE)
 wash_EVpop_hist_sel <- read.csv("data/wash_EVpop_hist_sel.csv", stringsAsFactors = FALSE)
 ```
+
+(1) Electric Vehicle Chargers (in Fuel Station) distribution 
+```{r}
+
+state_distribution <- chargStat_selected |>
+  group_by(State) |>
+  summarise(Count = n()) |>
+  mutate(Percentage = Count / sum(Count) * 100) |>
+  arrange(desc(Percentage)) 
+
+
+ggplot(state_distribution, aes(x = reorder(State, -Percentage), y = Percentage, fill = Percentage)) +
+  geom_bar(stat = "identity", color = "black") +  # Use black for bar border for clarity
+  labs(title = "Percentage of Charge Stations by State",
+       x = "State",
+       y = "Percentage (%)") +
+  theme_minimal() +
+  scale_fill_gradient(low = "lightblue", high = "darkblue", name = "Ranking") +  # Gradient for ranking
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  geom_text(aes(label = paste0(round(Percentage, 1), "%")), 
+            position = position_stack(vjust = 0.5), size =1.5, color = "white")  # Add percentage labels
+```
+
+
+
+```{r}
+# charger_type_distribution <- chargStat_selected %>%
+#   group_by(State) %>%
+#   summarise(
+#     Level1_Chargers = sum(`EV Level1 EVSE Num`, na.rm = TRUE),
+#     Level2_Chargers = sum(`EV Level2 EVSE Num`, na.rm = TRUE),
+#     DC_Fast_Chargers = sum(`EV DC Fast Count`, na.rm = TRUE)
+#   ) %>%
+#   pivot_longer(cols = c(Level1_Chargers, Level2_Chargers, DC_Fast_Chargers), 
+#                names_to = "Charger_Type", 
+#                values_to = "Count") %>%
+#   group_by(State) %>%
+#   mutate(Percentage = Count / sum(Count) * 100) %>%
+#   ungroup()
+# 
+# # Visualize the percentages
+# ggplot(charger_type_distribution, aes(x = reorder(State, -Percentage), y = Percentage, fill = Charger_Type)) +
+#   geom_bar(stat = "identity", position = "stack", color = "white") +
+#   labs(
+#     title = "Percentage of Chargers by Type and State",
+#     x = "State",
+#     y = "Percentage (%)"
+#   ) +
+#   theme_minimal() +
+#   theme(
+#     axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+#     legend.position = "bottom"
+#   ) +
+#   scale_fill_brewer(palette = "Set2")
+```
+
+
+
 
 
 (3) Electric Vehicle Population Data in the State of Washington
