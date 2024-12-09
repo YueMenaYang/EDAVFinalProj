@@ -74,11 +74,11 @@ fuel_prices_MA_filtered <- fuel_prices_MA |>
          !is.na(Propane_MA) | !is.na(Diesel_MA))
 
 ggplot(fuel_prices_MA_filtered, aes(x = Report.Date)) +
-  geom_line(aes(y = Gasoline_MA, color = "Gasoline"), size = 1,linetype = "dashed") +
-  geom_line(aes(y = E85_MA, color = "E85"), size = 1,linetype = "dashed") +
-  geom_line(aes(y = CNG_MA, color = "CNG"), size = 1,linetype = "dashed") +
-  geom_line(aes(y = Propane_MA, color = "Propane"), size = 1,linetype = "dashed") +
-  geom_line(aes(y = Diesel_MA, color = "Diesel"), size = 1,linetype = "dashed") +
+  geom_line(aes(y = Gasoline_MA, color = "Gasoline"), linewidth = 1,linetype = "dashed") +
+  geom_line(aes(y = E85_MA, color = "E85"), linewidth = 1,linetype = "dashed") +
+  geom_line(aes(y = CNG_MA, color = "CNG"), linewidth = 1,linetype = "dashed") +
+  geom_line(aes(y = Propane_MA, color = "Propane"), linewidth = 1,linetype = "dashed") +
+  geom_line(aes(y = Diesel_MA, color = "Diesel"), linewidth = 1,linetype = "dashed") +
   labs(
     title = "2 years Moving Average of Fuel Prices (Filtered)",
     x = "Date",
