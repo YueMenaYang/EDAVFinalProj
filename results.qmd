@@ -1,5 +1,7 @@
 # Results
-
+ 
+## Packages 
+Here is the packages we use
 ```{r message=FALSE, warning=FALSE}
 library(dplyr)
 library(readr)
@@ -8,6 +10,9 @@ library(tidyverse)
 library(scales)
 ```
 
+
+## Dataset
+Here is the dataset we call 
 ```{r}
 fuel_prices_average <- read.csv("data/fuel_prices_average.csv",stringsAsFactors = FALSE)
 chargStat_selected <- read.csv("data/chargStat_selected.csv", stringsAsFactors = FALSE)
@@ -16,7 +21,13 @@ wash_EVpop_hist_sel <- read.csv("data/wash_EVpop_hist_sel.csv", stringsAsFactors
 ```
 
 
-(pic) Timeseries Fuel Price (Gasoline, E85, CNG, Propane., Diesel)
+## Result Guideline:
+This analysis explores the electric vehicle (EV) market and its adoption trend, including fuel prices, charger distribution, and state-level EV sales. By examining trends, features, and key factors impacting EV adoption, we aim to understand its ecosystem. A focused analysis on Washington State will highlight specific EV sales types, charger availability, and brand performance.
+
+
+
+## Fuel Prices Time Series Trend
+This is the code to preprocess for the coming graph
 ```{r, warning=FALSE}
 fuel_prices_average <- fuel_prices_average |>
   mutate(across(
@@ -32,6 +43,8 @@ fuel_prices_average <- fuel_prices_average %>%
   mutate(Report.Date = as.Date(Report.Date, format = "%m/%d/%y"))
 
 ```
+
+In the interest of understanding EV adoption, analyzing fuel prices is crucial as they serve as a significant substitute factor for EV usage. This graph examines the trends in Gasoline, E85, CNG, Propane, and Diesel prices from 2001 to 2024, collected at intervals of 4-6 months. These fuel types were chosen due to their relevance in the automotive industry: Gasoline and Diesel are dominant in traditional vehicles, E85 represents a renewable alternative for flex-fuel cars, and CNG and Propane cater to niche or commercial uses. The graph reveals significant insights. First, Gasoline and Diesel prices show correlated trends, with spikes during periods of economic disruption. Second, E85 and CNG display relative price stability, likely reflecting consistent demand and supply patterns. Lastly, Propane prices exhibit sharp seasonal volatility, highlighting the influence of weather and supply chain factors. Overall, these trends underscore how fuel price dynamics can impact consumer decisions regarding EV adoption, presenting EVs as a cost-stable alternative amidst fuel price volatility.
 
 ```{r,warning=FALSE}
 
@@ -54,8 +67,11 @@ ggplot(fuel_prices_average, aes(x = Report.Date)) +
     legend.position = "top"
   )
 ```
+## 2-year Moving Average Fuel Price Trend
+The 2-year moving average smooths fuel price trends (2001–2024), revealing long-term stability for Propane and Gasoline, with Diesel and E85 showing higher volatility. These trends highlight fuel cost dynamics influencing EV adoption.
 
-(pic) Moving Average of Time Series of Fuel to hightlight change (k = 4 to caculate each 1 to 2 average since our indices of date is more likely break by half or one third of the year)
+
+
 ```{r}
 
 
@@ -92,10 +108,9 @@ ggplot(fuel_prices_MA_filtered, aes(x = Report.Date)) +
   )
 ```
 
+## Electric Vehicle Chargers Station (In Fuel Station)
+After observing the rising and fluctuating trends in fuel prices, we now turn our attention to the distribution of electric vehicle (EV) charging stations, which serve as the “fueling” infrastructure for EVs. This analysis highlights that California (CA) leads with the highest number of EV chargers, significantly outpacing other states. The next top 10 states with notable EV charger distributions are New York (NY), Texas (TX), Connecticut (CT), Michigan (MI), Florida (FL), Ohio (OH), Pennsylvania (PA), Massachusetts (MA), Illinois (IL), and Washington (WA). This distribution underscores the regional dynamics of EV infrastructure development.
 
-
-
-(pic) Electric Vehicle Chargers (in Fuel Station) distribution 
 
 ```{r}
 state_distribution <- chargStat_selected |>
@@ -105,23 +120,23 @@ state_distribution <- chargStat_selected |>
   arrange(desc(Percentage))
 
 
-ggplot(state_distribution, aes(x = reorder(State, -Percentage), y = Percentage, fill = Percentage)) +
-  geom_bar(stat = "identity", color = "black") +  
-  labs(title = "Percentage of EV chargers in fuel Stations by State",
-       x = "State",
-       y = "Percentage (%)") +
+ggplot(state_distribution, aes(x = Percentage, y = reorder(State, Percentage))) +
+  geom_point(aes(color = Percentage), size = 1) +
+  labs(
+    title = "Percentage of EV Chargers in Fuel Stations by State",
+    x = "Percentage (%)",
+    y = "State"
+  ) +
+  scale_color_gradient(low = "lightblue", high = "darkblue", name = "Ranking") +
   theme_minimal() +
-  scale_fill_gradient(low = "lightblue", high = "darkblue", name = "Ranking") + 
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  geom_text(aes(label = paste0(round(Percentage, 1), "%")),
-            position = position_stack(vjust = 0.5), size =1.5, color = "white")  
+  theme(
+    axis.text.y = element_text(size = 8),
+    legend.position = "right"
+  ) 
 ```
 
-
-
-(pic) Different Charger Type in Each state counts
-
-
+## EV Charge Station By Count 
+EV Level 1 chargers are slow and mainly used in residential settings for overnight charging, hence there is not too much device in public area. EV Level 2 chargers provide faster charging, suitable for public and commercial use. DC Fast Chargers offer rapid charging for long-distance travel. The graphs display the distribution of these charger types across states. Level 1 chargers are sparse, reflecting their limited usage. Level 2 chargers dominate the landscape, being widely used in public and private spaces. DC Fast Chargers, crucial for quick charging, are concentrated in states like California and Texas. These charts highlight California’s leadership in EV infrastructure, with other states trailing significantly.
 ```{r}
 charger_type_distribution <- chargStat_selected |>
   group_by(State) |>
@@ -188,7 +203,8 @@ ggplot(charger_dc_fast, aes(x = reorder(State, -Total_Count), y = Total_Count, f
 
 ```
 
-(pic) Facet with most popular chargers type: Level 2 Chargers and DC Fast Chargers
+
+Our focus is on public chargers, and the following graph provides a detailed comparison between Level 2 chargers and DC Fast Chargers across states. Level 2 chargers, typically used for residential and commercial purposes, offer a moderate charging speed, making them suitable for longer parking durations. On the other hand, DC Fast Chargers are designed for rapid charging, catering to drivers on long-distance trips or in need of quick top-ups. From the graph, we observe that states with a higher total number of EV chargers, such as California, Texas, and New York, also show a significant presence of both charger types, reflecting a balanced and comprehensive infrastructure.
 
 ```{r}
 level2_and_fast_distribution <- chargStat_selected |>
@@ -203,27 +219,26 @@ level2_and_fast_distribution <- chargStat_selected |>
   arrange(Charger.Type, desc(Total_Count))
 
 # Create faceted bar plot
-ggplot(level2_and_fast_distribution, aes(x = reorder(State, Total_Count), y = Total_Count, fill = Total_Count)) +
-  geom_bar(stat = "identity", color = "white") +
-  facet_wrap(~ Charger.Type, scales = "free_y") +
-  coord_flip() +
+ggplot(level2_and_fast_distribution, aes(x = reorder(State, -Total_Count), y = Total_Count, fill = Charger.Type)) +
+  geom_bar(stat = "identity", color = "white", position = "stack") +
   labs(
     title = "Level 2 and DC Fast Charger Distribution by State",
     x = "State",
     y = "Total Count",
-    fill = "Charger Count"
+    fill = "Charger Type"
   ) +
-  scale_fill_viridis_c(option = "D", direction = -1)+
+  scale_fill_viridis_d(option = "D", direction = -1) + # Adjust for distinct color for Charger Type
   theme_minimal() +
   theme(
-    axis.text.y = element_text(size = 8),
-    strip.text = element_text(size = 10, face = "bold")
+    axis.text.x = element_text(angle = 45, hjust = 1),
+    legend.position = "top"
   )
 ```
+This distribution highlights a clear correlation between the overall availability of chargers and the diversity of charging options provided. States with larger EV adoption rates prioritize offering a mix of Level 2 and DC Fast Chargers to cater to various consumer needs. Interestingly, states with fewer chargers, such as Wyoming and Alaska, exhibit limited diversity, focusing primarily on either Level 2 or DC Fast Chargers. This trend underscores how states with robust EV ecosystems invest in accessibility and convenience, promoting EV adoption by addressing both daily and long-distance charging requirements. 
 
+## Charge Station Access ability 
 
-(pic) Access time of the charger station in Total (24 hrs vs Not 24 hrs)
-
+This pie chart reveals that a significant majority, approximately 66.9%, of fuel stations equipped with EV chargers operate 24 hours a day, ensuring round-the-clock accessibility for EV owners. This highlights the growing emphasis on convenience and accessibility in the EV charging infrastructure, catering to diverse consumer needs such as late-night charging or emergency top-ups. Conversely, around 33.1% of these stations do not operate 24 hours, which may reflect limitations in certain locations, such as rural areas, or operational constraints like staffing or energy costs. This disparity underscores the need for further infrastructure development, particularly in states where 24-hour access is limited, to support the expanding EV market and provide equitable access to charging facilities.
 ```{r}
 access_time_grouped <- chargStat_selected |>
   mutate(
@@ -252,12 +267,11 @@ ggplot(overall_distribution, aes(x = "", y = Percentage, fill = Access_Group)) +
 ```
 
 
+In vary by state, we notice that the majority of EV charger stations operate 24 hours, as seen in states like California and New York, where the percentage is consistently high. However, states with lower overall counts, such as New Mexico and Alaska, show a relatively higher proportion of non-24-hour stations. This observation builds on our earlier exploration of state-level charger distribution, emphasizing that states with more extensive EV infrastructure also tend to prioritize 24-hour accessibility. The graph highlights regional differences, reflecting how infrastructure and accessibility priorities align with state-level EV adoption and public charging needs.
 
-
-(pic) 24hrs chargers distribution within each state
 ```{r}
 
-# Calculate the state-level distribution
+
 state_access_distribution <- access_time_grouped |> 
   group_by(State, Access_Group) |> 
   summarise(Count = n(), .groups = "drop") |> 
@@ -265,17 +279,15 @@ state_access_distribution <- access_time_grouped |>
   mutate(Percentage = (Count / sum(Count)) * 100)
 
 
-# Order states by the count of "24 Hours" access group
 state_order <- state_access_distribution |>
   filter(Access_Group == "24 Hours") |>
   arrange(desc(Percentage)) |>
   pull(State)
 
-# Create the bar graph with reordered states
 ggplot(state_access_distribution, aes(x = factor(State, levels = state_order), y = Percentage, fill = Access_Group)) +
   geom_bar(stat = "identity", position = "stack", color = "white") +
   labs(
-    title = "State-Level Distribution of Access Times in EV Charger Stations (24 Hours Ranked)",
+    title = "Distribution of Access Times in EV Charger Stations (24 Hours Ranked)",
     x = "State",
     y = "Percentage (%)",
     fill = "Access Group"
@@ -285,46 +297,8 @@ ggplot(state_access_distribution, aes(x = factor(State, levels = state_order), y
     axis.text.x = element_text(angle = 45, hjust = 1),
     legend.position = "top"
   ) +
-  scale_fill_manual(values = c("24 Hours" = "dodgerblue", "non 24 hours" = "tomato"))
+  scale_fill_manual(values = c("24 Hours" = "green", "non 24 hours" = "purple"))
 ```
-
-
-
-
-
-(pic) True or False of the Restrict Access of Charge Station 
-
-```{r}
-# Calculate the percentage of true and false for Restricted.Access in each state
-access_distribution <- chargStat_selected |>
-  group_by(State, Restricted.Access) |>
-  summarise(Count = n(), .groups = "drop") |>
-  group_by(State) |>
-  mutate(Percentage = (Count / sum(Count)) * 100)
-
-# Filter the `true` percentages to determine the ordering
-state_order <- access_distribution |>
-  filter(Restricted.Access == "true") |>
-  arrange(desc(Percentage)) |>
-  pull(State)
-
-# Create a bar graph to display the distribution
-ggplot(access_distribution, aes(x = factor(State, levels = state_order), y = Percentage, fill = Restricted.Access)) +
-  geom_bar(stat = "identity", position = "stack", color = "white") +
-  labs(
-    title = "Distribution of True and False Restricted Access by State",
-    x = "State",
-    y = "Percentage (%)",
-    fill = "Restricted Access of Charge Station"
-  ) +
-  theme_minimal() +
-  theme(
-    axis.text.x = element_text(angle = 45, hjust = 1),
-    legend.position = "top"
-  ) +
-  scale_fill_manual(values = c("true" = "dodgerblue", "false" = "tomato"))
-```
-
 
 ```{r}
 wash_city_EVs <- wash_EV_pop_sel |>

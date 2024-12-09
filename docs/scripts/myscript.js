@@ -24,7 +24,7 @@ var tip = d3.tip()
 svg.call(tip);
 
 
-d3.csv("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/statespercent.csv").then(function(data){
+d3.csv("https://raw.githubusercontent.com/YueMenaYang/EDAVFinalProj/refs/heads/main/data/state_summary.csv").then(function(data){
   var dataArray = [];
   for (var d=0; d < data.length; d++){
     dataArray.push(parseFloat(data[d].value));
@@ -37,12 +37,16 @@ d3.csv("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/st
     for (var i = 0; i < data.length; i++){
       var dataState = data[i].state;
       var dataValue = data[i].value;
-      var dataC = data[i].so2;
+      var dataL1 = data[i].level1;
+      var dataL2 = data[i].level2;
+      var datafast = data[i].fast;
       for (var j=0; j < json.features.length; j++){
         var jsonState = json.features[j].properties.name;
         if (dataState == jsonState){
           json.features[j].properties.value = dataValue;
-          json.features[j].properties.so2 = dataC;
+          json.features[j].properties.level1 = dataL1;
+          json.features[j].properties.level2 = dataL2;
+          json.features[j].properties.fast = datafast;
           break;
         }
       }
@@ -61,7 +65,9 @@ d3.csv("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/st
       .on("mouseover", function(event, d){
         tip.show(event, d.properties.name + '<br/><br/>' +
         'Number of Electric Stations: ' + d.properties.value + '<br/>' + 
-        'Number of Level1 Stations: ' + d.properties.so2);
+        'Number of Level 1 Stations: ' + d.properties.level1 + '<br/>' + 
+        'Number of Level 2 Stations:' + d.properties.level2 + '<br/>' +
+        'Number of Fast Stations:' + d.properties.fast);
       })
       .on("mouseout", tip.hide);
   
