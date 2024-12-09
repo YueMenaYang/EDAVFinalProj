@@ -1,19 +1,66 @@
 # Interactive graph
 
-<html>
-<head>
-  <style>
-    * {
-      font-family: sans-serif;
-    }
-  </style>
-</head>
-<body>
-  <div id="plot"></div>
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="scripts/myscript.js"></script>
-</body>
-</html>
+<!-- <html> -->
+<!-- <head> -->
+<!--   <style> -->
+<!--     * { -->
+<!--       font-family: sans-serif; -->
+<!--     } -->
+<!--   </style> -->
+<!-- </head> -->
+<!-- <body> -->
+<!--   <div id="plot"></div> -->
+<!--   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script> -->
+<!--   <script src="scripts/myscript.js"></script> -->
+<!-- </body> -->
+<!-- </html> -->
+
+<h2>Number of Electric Stations by State</h2>
+<script src="https://d3js.org/d3.v6.min.js"></script>
+<script src="https://d3js.org/d3-selection.v2.min.js"></script>
+<script src="https://unpkg.com/d3-v6-tip@1.0.6/build/d3-v6-tip.js"></script>
+
+<style>
+path:hover {
+	fill-opacity: .7;
+}
+
+body {
+    font-family: "Open Sans", sans-serif;
+    font-size: 16px;
+    padding: 40px;
+}
+
+h2{
+  font-size: 3em;
+  font-weight: 700;
+  color: #0E6251;
+  text-align:center;
+}
+
+.states {
+    stroke: #fff;
+    stroke-width:1px;
+}
+
+.d3-tip {
+  line-height: 1;
+  padding: 12px;
+  background: rgba(43,43,43, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+</style>
+
+<div id="plot"></div>
+
+<script src="scripts/myscript.js"></script>
+
+<p>Instruction: </p>
+Move the cursor to a state on the graph, the number of electric stations will appear. 
+<p>Sources: </p>
+<p> https://www.npmjs.com/package/d3-v6-tip https://bl.ocks.org/wboykinm/dbbe50d1023f90d4e241712395c27fb3#statesdata.csv
+</p>
 
 
 
