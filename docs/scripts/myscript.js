@@ -33,7 +33,7 @@ d3.csv("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/st
   var maxVal = d3.max(dataArray);
   var ramp = d3.scaleLinear().domain([minVal, maxVal]).range([lowColor, highColor]);
   
-  d3.json("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/us-states.json").then(function(json){
+  d3.json("https://raw.githubusercontent.com/YueMenaYang/EDAVFinalProj/refs/heads/main/data/us-states.json").then(function(json){
     for (var i = 0; i < data.length; i++){
       var dataState = data[i].state;
       var dataValue = data[i].value;
@@ -60,8 +60,8 @@ d3.csv("https://raw.githubusercontent.com/edavGroup3/usairpollution/main/data/st
   svg.selectAll("path")
       .on("mouseover", function(event, d){
         tip.show(event, d.properties.name + '<br/><br/>' +
-        'Lung Cancer Rate: ' + d.properties.value +'%' + '<br/>' + 
-        'SO2 Concentration: ' + d.properties.so2 + ' µg/m^3');
+        'Number of Electric Stations: ' + d.properties.value + '<br/>' + 
+        'Number of Level1 Stations: ' + d.properties.so2);
       })
       .on("mouseout", tip.hide);
   

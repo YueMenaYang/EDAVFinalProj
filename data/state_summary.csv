@@ -1,52 +1,52 @@
-State,StationCount,EV.Level1.EVSE.Num,EV.Level2.EVSE.Num,EV.DC.Fast.Count
-Alaska,45,0,65,27
-Alabama,84,0,118,298
-Arkansas,95,0,198,43
-Arizona,235,0,639,543
-California,1923,75,7701,4769
-Colorado,258,33,577,241
-Connecticut,495,6,1416,181
-Washington,36,2,153,8
-Delaware,47,0,60,127
-Florida,454,10,610,1474
-Georgia,298,81,582,510
-Hawaii,112,0,209,36
-Iowa,71,0,92,94
-Idaho,42,0,65,46
-Illinois,342,3,598,486
-Indiana,141,0,247,261
-Kansas,60,0,70,96
-Kentucky,112,0,200,95
-Louisiana,79,0,121,132
-Massachusetts,359,2,1387,397
-Maryland,298,5,653,394
-Maine,183,3,319,95
-Michigan,480,0,976,346
-Minnesota,134,4,200,243
-Missouri,126,0,245,165
-Mississippi,54,0,95,24
-Montana,43,0,68,63
-North Carolina,310,2,645,645
-North Dakota,39,0,49,20
-Nebraska,23,0,28,59
-New Hampshire,87,1,127,86
-New Jersey,236,3,554,525
-New Mexico,72,1,91,119
-Nevada,82,2,219,436
-New York,996,1,4974,726
-Ohio,387,4,698,431
-Oklahoma,181,1,222,738
-Oregon,188,15,317,353
-Pennsylvania,375,9,715,538
-Rhode Island,36,20,116,45
-South Carolina,199,1,340,303
-South Dakota,16,0,12,20
-Tennessee,121,0,220,268
-Texas,845,0,1796,1720
-Utah,102,7,310,189
-Virginia,329,2,669,412
-Vermont,93,2,186,66
-Washington,340,3,798,457
-Wisconsin,101,0,110,271
-West Virginia,65,1,125,68
-Wyoming,26,0,47,9
+ ,state,value,level1,level2,fast
+1,Alabama,84,0,118,298
+2,Alaska,45,0,65,27
+3,Arizona,235,0,639,543
+4,Arkansas,95,0,198,43
+5,California,1923,75,7701,4769
+6,Colorado,258,33,577,241
+7,Connecticut,495,6,1416,181
+8,Delaware,47,0,60,127
+9,Florida,454,10,610,1474
+10,Georgia,298,81,582,510
+11,Hawaii,112,0,209,36
+12,Idaho,42,0,65,46
+13,Illinois,342,3,598,486
+14,Indiana,141,0,247,261
+15,Iowa,71,0,92,94
+16,Kansas,60,0,70,96
+17,Kentucky,112,0,200,95
+18,Louisiana,79,0,121,132
+19,Maine,183,3,319,95
+20,Maryland,298,5,653,394
+21,Massachusetts,359,2,1387,397
+22,Michigan,480,0,976,346
+23,Minnesota,134,4,200,243
+24,Mississippi,54,0,95,24
+25,Missouri,126,0,245,165
+26,Montana,43,0,68,63
+27,Nebraska,23,0,28,59
+28,Nevada,82,2,219,436
+29,New Hampshire,87,1,127,86
+30,New Jersey,236,3,554,525
+31,New Mexico,72,1,91,119
+32,New York,996,1,4974,726
+33,North Carolina,310,2,645,645
+34,North Dakota,39,0,49,20
+35,Ohio,387,4,698,431
+36,Oklahoma,181,1,222,738
+37,Oregon,188,15,317,353
+38,Pennsylvania,375,9,715,538
+39,Rhode Island,36,20,116,45
+40,South Carolina,199,1,340,303
+41,South Dakota,16,0,12,20
+42,Tennessee,121,0,220,268
+43,Texas,845,0,1796,1720
+44,Utah,102,7,310,189
+45,Vermont,93,2,186,66
+46,Virginia,329,2,669,412
+47,Washington,36,2,153,8
+48,Washington,340,3,798,457
+49,West Virginia,65,1,125,68
+50,Wisconsin,101,0,110,271
+51,Wyoming,26,0,47,9
