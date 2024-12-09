@@ -441,6 +441,47 @@ ggplot(scatter_data, aes(x = StationCount, y = BEV_Proportion)) +
     axis.text = element_text(size = 10)
   )
 ```
+```{r}
+ev_threshold <- 5000
+
+high_cities <- merged_data |>
+  filter(CarCount > ev_threshold) |>
+  select(City, StationCount)
+
+high_cities_ev <- wash_EV_pop_sel |>
+  filter(City %in% high_cities$City)
+
+wash_city_ev_prop <- high_cities_ev |>
+  group_by(City, Electric.Vehicle.Type) |>
+  summarise(Count = n(), .groups = "drop") |>
+  group_by(City) |>
+  mutate(Proportion = Count / sum(Count)) |>
+  left_join(high_cities, by = "City") |>
+  arrange(StationCount) |>
+  mutate(
+    City = factor(City, levels = unique(City)),  # Ensure City is a factor with sorted levels
+    Electric.Vehicle.Type = factor(Electric.Vehicle.Type, levels = c(
+      "Plug-in Hybrid Electric Vehicle (PHEV)",
+      "Battery Electric Vehicle (BEV)"
+    ))
+  )
+
+ggplot(wash_city_ev_prop, aes(x = reorder(City, StationCount), y = Proportion, fill = Electric.Vehicle.Type)) +
+  geom_bar(stat = "identity", position = "stack") +
+  theme_minimal() +
+  labs(
+    title = "Proportion of Electric Vehicle Types in Cities with High Counts",
+    x = "City (sorted by Station Count)",
+    y = "Proportion",
+    fill = "EV Type"
+  ) +
+  scale_y_continuous(labels = scales::percent) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 10),
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12)
+  )
+```
 
 ```{r}
 make_counts <- wash_EV_pop_sel|>
