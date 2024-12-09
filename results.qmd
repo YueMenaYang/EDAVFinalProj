@@ -5,6 +5,7 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 library(tidyverse)
+library(scales)
 ```
 
 ```{r}
@@ -325,11 +326,75 @@ ggplot(access_distribution, aes(x = factor(State, levels = state_order), y = Per
 ```
 
 
+```{r}
+wash_city_EVs <- wash_EV_pop_sel |>
+  group_by(City) |>
+  summarise(CarCount = n()) |>
+  arrange(desc(CarCount)) 
+```
 
+```{r}
+#| fig-width: 25
+#| fig-height: 25
+wash_city_EVs2 <- wash_city_EVs |>
+  mutate(City = ifelse(CarCount < 500, "Other", as.character(City))) |>
+  group_by(City) |>
+  summarise(CarCount = sum(CarCount)) |>
+  mutate(Proportion = CarCount / sum(CarCount)) |>
+  arrange(desc(Proportion))
 
+ggplot(wash_city_EVs2, aes(y = reorder(City, -Proportion), x = Proportion, fill = Proportion)) +
+  geom_bar(stat = "identity") +
+  theme_minimal() +
+  labs(
+    title = "Proportion of Electric Vehicles in Each City",
+    x = "Proportion",
+    y = "City"
+  ) +
+  theme(
+    axis.text.x = element_text(angle = 45, hjust = 1, size = 15),
+    axis.text.y = element_text(size = 15),
+    plot.title = element_text(size = 20, face = "bold"),
+    axis.title = element_text(size = 18)
+  ) +
+  scale_x_continuous(labels = percent) +  # Show x-axis as percentages
+  scale_fill_gradient(low = "lightblue", high = "darkblue")  # Gradient color scheme
+```
+We want to know why there's a big gap between the number of EVs in each city in WA. 
 
+```{r}
+wash_chargStat <- chargStat_selected |>
+  filter(State == "WA", Restricted.Access == "false")
 
-(pic) Electric Vehicle Population Data in the State of Washington
+wash_charg_counts <- wash_chargStat |>
+  group_by(City) |>
+  summarise(StationCount = n()) |>
+  arrange(desc(StationCount)) 
+
+merged_data <- merge(wash_city_EVs, wash_charg_counts, by = "City", suffixes = c("car_", "station_"))
+
+ev_threshold <- 10000
+station_threshold <- 10
+
+ggplot(merged_data, aes(y = CarCount, x = StationCount)) +
+  geom_point(color = "steelblue", size = 3, alpha = 0.6) +
+  geom_text(
+    aes(label = ifelse(CarCount > ev_threshold | StationCount > station_threshold, City, "")), 
+    hjust = 0.5, vjust = -0.5, size = 3, color = "darkred"
+  ) +
+  theme_minimal() +
+  labs(
+    title = "Scatterplot of Station Counts and EV Counts in Cities in WA",
+    y = "Counts of EVs in Each City",
+    x = "Counts of Stations in Each City"
+  ) +
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10)
+  )
+```
+
 ```{r}
 ev_type_counts <- wash_EV_pop_sel |>
   count(Electric.Vehicle.Type) |>
@@ -346,7 +411,37 @@ ggplot(ev_type_counts, aes(x = "", y = percentage, fill = Electric.Vehicle.Type)
   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
             position = position_stack(vjust = 0.5))
 ```
-(pic)
+
+```{r}
+bev_proportions <- wash_EV_pop_sel |> 
+  group_by(City) |>
+  summarise(
+    Total_EV_Count = n(),
+    BEV_Count = sum(Electric.Vehicle.Type == "Battery Electric Vehicle (BEV)"),
+    BEV_Proportion = BEV_Count / Total_EV_Count,
+    .groups = "drop"
+  )
+
+scatter_data <- merged_data |>
+  select(City, StationCount) |>
+  inner_join(bev_proportions, by = "City")
+
+ggplot(scatter_data, aes(x = StationCount, y = BEV_Proportion)) +
+  geom_point(color = "steelblue", size = 3, alpha = 0.7) +
+  theme_minimal() +
+  labs(
+    title = "Scatterplot of BEV Proportion vs Stations in Cities",
+    x = "Number of Stations in Each City",
+    y = "Proportion of BEVs in Each City"
+  ) +
+  scale_y_continuous(labels = scales::percent) +  
+  theme(
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    axis.text = element_text(size = 10)
+  )
+```
+
 ```{r}
 make_counts <- wash_EV_pop_sel|>
   count(Make) |>
