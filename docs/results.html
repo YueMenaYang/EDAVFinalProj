@@ -191,6 +191,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#electric-vehicle-chargers-station-in-fuel-station" id="toc-electric-vehicle-chargers-station-in-fuel-station" class="nav-link" data-scroll-target="#electric-vehicle-chargers-station-in-fuel-station"><span class="header-section-number">3.6</span> Electric Vehicle Chargers Station (In Fuel Station)</a></li>
   <li><a href="#ev-charge-station-by-count" id="toc-ev-charge-station-by-count" class="nav-link" data-scroll-target="#ev-charge-station-by-count"><span class="header-section-number">3.7</span> EV Charge Station By Count</a></li>
   <li><a href="#charge-station-access-ability" id="toc-charge-station-access-ability" class="nav-link" data-scroll-target="#charge-station-access-ability"><span class="header-section-number">3.8</span> Charge Station Access ability</a></li>
+  <li><a href="#proportion-of-evs-in-cities-in-wa" id="toc-proportion-of-evs-in-cities-in-wa" class="nav-link" data-scroll-target="#proportion-of-evs-in-cities-in-wa"><span class="header-section-number">3.9</span> Proportion of EVs in Cities in WA</a></li>
+  <li><a href="#number-of-evs-and-charging-stations-in-cities-in-wa" id="toc-number-of-evs-and-charging-stations-in-cities-in-wa" class="nav-link" data-scroll-target="#number-of-evs-and-charging-stations-in-cities-in-wa"><span class="header-section-number">3.10</span> Number of EVs and Charging Stations in Cities in WA</a></li>
+  <li><a href="#distributions-of-ev-types-in-wa" id="toc-distributions-of-ev-types-in-wa" class="nav-link" data-scroll-target="#distributions-of-ev-types-in-wa"><span class="header-section-number">3.11</span> Distributions of EV Types in WA</a></li>
+  <li><a href="#number-of-charging-stations-and-distributions-of-ev-types-in-cities-in-wa" id="toc-number-of-charging-stations-and-distributions-of-ev-types-in-cities-in-wa" class="nav-link" data-scroll-target="#number-of-charging-stations-and-distributions-of-ev-types-in-cities-in-wa"><span class="header-section-number">3.12</span> Number of Charging Stations and Distributions of EV Types in Cities in WA</a></li>
+  <li><a href="#distribution-of-ev-makes-in-wa" id="toc-distribution-of-ev-makes-in-wa" class="nav-link" data-scroll-target="#distribution-of-ev-makes-in-wa"><span class="header-section-number">3.13</span> Distribution of EV Makes in WA</a></li>
   </ul>
 <div class="toc-actions"><ul><li><a href="https://github.com/YueMenaYang/EDAVFinalProj/edit/main/results.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/YueMenaYang/EDAVFinalProj/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
@@ -218,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="packages" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="packages"><span class="header-section-number">3.1</span> Packages</h2>
-<p>Here is the packages we use</p>
+<p>Here are the packages we use</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -232,7 +237,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="dataset" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="dataset"><span class="header-section-number">3.2</span> Dataset</h2>
-<p>Here is the dataset we call</p>
+<p>Here are the datasets we call</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -592,6 +597,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</section>
+<section id="proportion-of-evs-in-cities-in-wa" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="proportion-of-evs-in-cities-in-wa"><span class="header-section-number">3.9</span> Proportion of EVs in Cities in WA</h2>
+<p>After examining the overall state of EV chargers across the United States, we narrowed our focus to Washington State (WA) to analyze how EVs and charging stations are distributed across its counties. To start, we created a bar graph showing the proportion of EVs in each county within WA.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -636,7 +645,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>We want to know why there’s a big gap between the number of EVs in each city in WA.</p>
+<p>In this graph, cities with fewer than 500 EVs were grouped into a single category labeled as “Other.”</p>
+<p>The city of Seattle stands out with the highest proportion of EVs, followed by Bellevue and Vancouver. Conversely, many smaller cities, such as Spanaway, Stanwood, and Wenatchee, show significantly lower proportions of EVs. This demonstrates a skewed distribution, where a few cities dominate EV ownership while the majority contribute minimally.</p>
+<p>This result prompts further exploration of the factors that may correlate with EV proportions or counts, such as: availability of charging infrastructure, population density, Income levels, environmental policies or incentives.</p>
+</section>
+<section id="number-of-evs-and-charging-stations-in-cities-in-wa" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="number-of-evs-and-charging-stations-in-cities-in-wa"><span class="header-section-number">3.10</span> Number of EVs and Charging Stations in Cities in WA</h2>
+<p>Using our dataset, we aim to investigate whether the number of charging stations influences EV ownership levels.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -679,6 +694,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>This scatterplot illustrates the relationship between the number of EV charging stations (x-axis) and the number of EVs (y-axis) in various cities in Washington State (WA). The cities with high number of EVs(more than 10,000) and relatively high numbers of charging stations(more than 10) are labeled in the graph.</p>
+<p>Seattle stands out with both the highest number of EVs (over 30,000) and a relatively high number of charging stations. Bellevue is another prominent city, with over 10,000 EVs but fewer charging stations compared to the other cities. Tacoma and Spokane are notable for having much lower EV counts but relatively more charging stations.</p>
+<p>The graph shows that charging stations alone do not fully explain EV adoption. Other factors, such as population size, income levels, environmental incentives, and commuting patterns, likely contribute more.</p>
+<p>In addition, we can hypothesize that there might be a threshold for the number of charging stations to significantly influence EV adoption. Specifically, if the number of charging stations exceeds 25 (as seen in Seattle), it could lead to a substantial increase in the number of EVs. This can be tested in the later studies with more data of other States.</p>
+</section>
+<section id="distributions-of-ev-types-in-wa" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="distributions-of-ev-types-in-wa"><span class="header-section-number">3.11</span> Distributions of EV Types in WA</h2>
+<p>We also want to understand why the number of EVs in some cities does not strongly correlate with the number of charging stations. This is particularly evident in cities like Bellevue, where there are relatively few charging stations but a high number of EVs. One possible explanation is that residents may be purchasing more Plug-in Hybrid Electric Vehicles (PHEVs) rather than Battery Electric Vehicles (BEVs). To explore this, we began by examining the overall distribution of these two types of EVs.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -705,6 +728,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>This pie chart illustrates the distribution of Electric Vehicle (EV) types in WA, comparing Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs).</p>
+<p>BEVs make up 78.8% of the total EV population, showing a strong preference for fully electric vehicles over hybrids. PHEVs account for 21.2% of the total EV population. This suggests that the majority of EV users are choosing vehicles that rely entirely on electricity rather than hybrids that use a combination of fuel and electricity.</p>
+<p>This general distribution pie chart alone is insufficient to explain why some cities with few charging stations have a high number of EVs, while others with relatively more charging stations have fewer EVs. To better understand this, we need to analyze the relationship between the proportion of BEVs and the number of charging stations in each city to identify potential patterns or trends.</p>
+</section>
+<section id="number-of-charging-stations-and-distributions-of-ev-types-in-cities-in-wa" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="number-of-charging-stations-and-distributions-of-ev-types-in-cities-in-wa"><span class="header-section-number">3.12</span> Number of Charging Stations and Distributions of EV Types in Cities in WA</h2>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -744,6 +773,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>This scatterplot illustrates the relationship between the proportion of Battery Electric Vehicles (BEVs) (y-axis) and the number of charging stations in each city (x-axis).</p>
+<p>Many cities have a BEV proportion above 75%, regardless of the number of charging stations, indicating a strong preference for BEVs across various regions. There are also a few cities with very low BEV proportions (below 25%), but these are less frequent. The majority of cities have fewer than 5 charging stations, yet their BEV proportions remain relatively high. This suggests that BEV adoption is not entirely dependent on public charging infrastructure. This conclusion is supported by the next graph, which focuses on the distribution of EV types in cities with a high number of EVs.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -793,6 +824,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>This stacked bar chart depicts the proportions of Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) in cities with high EV counts(more than 5000), and the the cities on x-axis are ordered by the increasing number of charging stations in that city.</p>
+<p>Across all cities shown (Bothell, Bellevue, Kirkland, Sammamish, Redmond, Olympia, Renton, Vancouver, and Seattle), BEVs consistently represent the majority of EVs. While BEVs dominate, the proportion of PHEVs varies slightly among cities. Cities like Olympia and Seattle show slightly higher proportions of PHEVs compared to others. Kirkland, Sammamish, and Redmond have lower PHEV proportions, with BEVs accounting for almost the entire EV population. However, there is not patter of the number of BEVs from left bar to the right bar, meaning from a relatively low number of charging stations to a high number charging stations.</p>
+<p>This emphasizes the previous conclusion that the reason why the number of EVs is not correlated with the number of charging stations is not related to the type of EVs.</p>
+</section>
+<section id="distribution-of-ev-makes-in-wa" class="level2" data-number="3.13">
+<h2 data-number="3.13" class="anchored" data-anchor-id="distribution-of-ev-makes-in-wa"><span class="header-section-number">3.13</span> Distribution of EV Makes in WA</h2>
+<p>Using the data, we also want to know how the make of EVs are disrtibuted. Are they dominated by one make?</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -833,6 +871,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p>This graph showcases the distribution of total EV sales by brand in Washington State. Tesla emerges as the clear leader, significantly outpacing other manufacturers, reflecting its dominance in the EV market. Chevrolet and Nissan hold the second and third positions, respectively, but their sales are dwarfed by Tesla’s overwhelming presence. Other brands, such as Ford, Kia, and BMW, show modest contributions to the market, while smaller brands trail even further behind. This distribution underscores Tesla’s pivotal role in driving EV adoption in the state, with other brands collectively contributing to a diverse yet secondary share of the EV market.</p>
 
 
 </section>

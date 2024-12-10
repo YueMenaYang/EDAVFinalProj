@@ -216,7 +216,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Alternative Fuel Price Report in the US Link: https://afdc.energy.gov/fuels/prices.html Last Update/Frequency: Oct 2024 Dimension: 10 columns, 103 rows Original Format: Excel Plan to Import in Form: CSV Description: This dataset provides the average fuel prices (in dollars per gasoline gallon equivalents, GGEs) in the United States for various fuel types, including Biodiesel (B99-B100), Ethanol (E85), Natural Gas (CNG), Liquefied Natural Gas (LNG), Propane, Gasoline, and Diesel. The data, consisting of numerical values, captures the fluctuations in fuel prices over time, spanning from April 10, 2000, to April 1, 2024. However, there are several issues with the dataset. Notably, there are numerous missing values, particularly for LNG and B99-B100, especially in the earlier years. Additionally, the frequency of data collection is inconsistent. For instance, in 2000, data was collected only once (on April 10), whereas in 2004, data was collected twice (on March 3 and November 15). This inconsistency could pose challenges when attempting to analyze or compare price trends across years.</p></li>
 <li><p>Charge Station Data in the US Link: https://driveelectric.gov/stations Last Update/Frequency: At least once a year Dimension: 75 columns, 73967 rows Original Format: CSV Plan to Import in Form: CSV This data is interested that it shows all the geomgraphly distribution along with all EV charging station in the state. In this data set it provide both numerical data and categorical data: For numerical data, it collects and present the charying types counts and location in term of latitude and attitude. For the categorical data, it represents the area, public status, restrict access or so. This dataset does not contain much missing value and majority indicate the distribution information along with area and charge types. Many values in many columns are missing and the dataset is sparse in some part, but as long as the values we need are available, then we will be able to analyze.</p></li>
 <li><p>Electric Vehicle Population Data in the State of Washington Link: https://catalog.data.gov/dataset/electric-vehicle-population-data Last Update/Frequency: October 19, 2024 Dimension: 17 columns, 210165 rows Original Format: CSV Plan to Import in Form: CSV Description: This dataset shows the Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) that are registered through the Washington State Department of Licensing (DOL) in 2020. Specifically, this dataset provide variables in term of brand of EV and county location of sales along with their EV types, Model Make, and Ectric Range. There are no missing values in term and the dataset contains both numerical and categorial correspond to parameters in Electric Vehicle and location information. However, there are many 0 values in the column Manufacturer’s Suggested Retail Price (MSRP), which are not real values, so we can’t use this dataset to discuss the price of EVs.</p></li>
-<li><p>Electric Vehicle Population Size History By County in the State of Washington Link: https://catalog.data.gov/dataset/electric-vehicle-population-size-history-by-count Last Update/Frequency: October 19, 2024 Dimension: 10 columns, 23440 rows Original Format: Excel Plan to Import in Form: CSV Description: This shows the number of vehicles that were registered by the Washington State Department of Licensing (DOL) each month from 2020 to 2024. The data is separated by county for passenger vehicles and trucks. Specifically, it provide detail numerical information about Batteries, Plug in, hybrid, total number of EV, and non EV total number. It could be suggested that we could use pie chart or other graph to display the distribution of EV vs Non-EV sales along with Area. There are no missing data, but the data is not organized well. For example, the rows are not sorted based on the dates, so we need to be careful when dealing with it.</p></li>
 </ol>
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.2">
@@ -505,75 +504,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </details>
 </div>
 <p>We cleaned the data similarly to what we did on dataset 3. We chose the columns that we care by deleting the columns that are not important to this project. Then we deleted the rows containing NA values. After the clearning, we can see that there are no missing values.</p>
-<p>4.Electric Vehicle Population Size History By County in the State of Washington</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>file_path <span class="ot">&lt;-</span> <span class="st">"data/wash_EVPop_Hist_County.csv"</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(file_path, <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data[data <span class="sc">==</span> <span class="st">""</span>] <span class="ot">&lt;-</span> <span class="cn">NA</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>wash_EVpop_hist <span class="ot">&lt;-</span> data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EVpop_hist))</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Both the State and County columns have a significant number of missing values. These two columns are important to our topic, so we didn’t delete them like what we did on the previous dataset.<br>
-All other columns appear to have no missing values.</p>
-<div class="cell">
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>wash_EVpop_hist_sel <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(wash_EVpop_hist)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>missing_values <span class="ot">&lt;-</span> <span class="fu">colSums</span>(<span class="fu">is.na</span>(wash_EVpop_hist_sel))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>missing_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Column =</span> <span class="fu">names</span>(missing_values), <span class="at">MissingValues =</span> missing_values)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(missing_df) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(missing_df, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Column, <span class="sc">-</span>MissingValues), <span class="at">y =</span> MissingValues)) <span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Missing Values Per Column"</span>,</span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Columns"</span>,</span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Count of Missing Values"</span></span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="data_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<details class="code-fold">
-<summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(wash_EVpop_hist_sel, <span class="st">"data/wash_EVpop_hist_sel.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<p>Though the number of missing values for columns State and County are relatively higher than the other columns, comparing to the total number of row, deleting the those missing values won’t cause a significant data loss. Therefore, we deleted them.</p>
 
 
 </section>

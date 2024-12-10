@@ -32,16 +32,6 @@ Description:
 This dataset shows the Battery Electric Vehicles (BEVs) and Plug-in Hybrid Electric Vehicles (PHEVs) that are registered through the Washington State Department of Licensing (DOL) in 2020. Specifically, this dataset provide variables in term of brand of EV and county location of sales along with their EV types, Model Make, and Ectric Range. There are no missing values in term and the dataset contains both numerical and categorial correspond to parameters in Electric Vehicle and location information. However, there are many 0 values in the column Manufacturer's Suggested Retail Price (MSRP), which are not real values, so we can't use this dataset to discuss the price of EVs. 
 
 
-4. Electric Vehicle Population Size History By County in the State of Washington
-Link: https://catalog.data.gov/dataset/electric-vehicle-population-size-history-by-count
-Last Update/Frequency: October 19, 2024
-Dimension: 10 columns, 23440 rows
-Original Format: Excel
-Plan to Import in Form: CSV
-Description: 
-This shows the number of vehicles that were registered by the Washington State Department of Licensing (DOL) each month from 2020 to 2024. The data is separated by county for passenger vehicles and trucks. Specifically, it provide detail numerical information about Batteries, Plug in, hybrid, total number of EV, and non EV total number. It could be suggested that we could use pie chart or other graph to display the distribution of EV vs Non-EV sales along with Area. There are no missing data, but the data is not organized well. For example, the rows are not sorted based on the dates, so we need to be careful when dealing with it.
-
-
 ## Missing value analysis
 
 ```{r message=FALSE, warning=FALSE}
@@ -196,51 +186,3 @@ write_csv(wash_EV_pop_sel, "data/wash_EV_pop_sel.csv")
 ```
 
 We cleaned the data similarly to what we did on dataset 3. We chose the columns that we care by deleting the columns that are not important to this project. Then we deleted the rows containing NA values. After the clearning, we can see that there are no missing values. 
-
-
-4.Electric Vehicle Population Size History By County in the State of Washington
-```{r}
-file_path <- "data/wash_EVPop_Hist_County.csv"
-data <- read.csv(file_path, stringsAsFactors = FALSE)
-data[data == ""] <- NA
-wash_EVpop_hist <- data
-```
-
-```{r}
-missing_values <- colSums(is.na(wash_EVpop_hist))
-missing_df <- data.frame(Column = names(missing_values), MissingValues = missing_values)
-rownames(missing_df) <- NULL
-
-ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  coord_flip() +
-  labs(
-    title = "Missing Values Per Column",
-    x = "Columns",
-    y = "Count of Missing Values"
-  ) +
-  theme_minimal()
-```
-Both the State and County columns have a significant number of missing values. These two columns are important to our topic, so we didn't delete them like what we did on the previous dataset.  
-All other columns appear to have no missing values.
-
-```{r}
-wash_EVpop_hist_sel <- na.omit(wash_EVpop_hist)
-
-missing_values <- colSums(is.na(wash_EVpop_hist_sel))
-missing_df <- data.frame(Column = names(missing_values), MissingValues = missing_values)
-rownames(missing_df) <- NULL
-
-ggplot(missing_df, aes(x = reorder(Column, -MissingValues), y = MissingValues)) +
-  geom_bar(stat = "identity", fill = "steelblue") +
-  coord_flip() +
-  labs(
-    title = "Missing Values Per Column",
-    x = "Columns",
-    y = "Count of Missing Values"
-  ) +
-  theme_minimal()
-
-write_csv(wash_EVpop_hist_sel, "data/wash_EVpop_hist_sel.csv")
-```
-Though the number of missing values for columns State and County are relatively higher than the other columns, comparing to the total number of row, deleting the those missing values won't cause a significant data loss. Therefore, we deleted them. 
