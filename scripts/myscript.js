@@ -2,8 +2,8 @@
 var width = 960;
 var height = 500;
 
-var lowColor = '#E8F8F5';
-var highColor = '#0E6251';
+var lowColor = '#e8d5f7'; 
+var highColor = '#22023d'; 
 
 var projection = d3.geoAlbersUsa()
   .translate([width/2, height/2])
