@@ -124,7 +124,7 @@
     "href": "d3graph.html",
     "title": "4  Interactive graph",
     "section": "",
-    "text": "Electric Stations by State\n\n\n\n\n\n\n\n\n\n\nInstruction:\n\nMove the cursor to a state on the graph, the number of electric stations will appear.\n\nSources:\n\n\nhttps://www.npmjs.com/package/d3-v6-tip https://bl.ocks.org/wboykinm/dbbe50d1023f90d4e241712395c27fb3#statesdata.csv",
+    "text": "Electric Stations by State\n\n\n\n\n\n\n\n\n\n\nInstruction:\n\nMove the cursor to a state on the graph, the number of electric stations, Level1 stations, Level2 stations, and Fast charging stations will appear.\n\nSources:\n\n\nhttps://www.npmjs.com/package/d3-v6-tip https://bl.ocks.org/wboykinm/dbbe50d1023f90d4e241712395c27fb3#statesdata.csv",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Interactive graph</span>"
     ]

@@ -34,7 +34,7 @@ body {
 h2{
   font-size: 3em;
   font-weight: 700;
-  color: #0E6251;
+  color: #5b0b7a;
   text-align:center;
 }
 
@@ -57,7 +57,7 @@ h2{
 <script src="scripts/myscript.js"></script>
 
 <p>Instruction: </p>
-Move the cursor to a state on the graph, the number of electric stations will appear. 
+Move the cursor to a state on the graph, the number of electric stations, Level1 stations, Level2 stations, and Fast charging stations will appear. 
 <p>Sources: </p>
 <p> https://www.npmjs.com/package/d3-v6-tip https://bl.ocks.org/wboykinm/dbbe50d1023f90d4e241712395c27fb3#statesdata.csv
 </p>

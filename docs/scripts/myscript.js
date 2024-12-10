@@ -2,8 +2,8 @@
 var width = 960;
 var height = 500;
 
-var lowColor = '#e8d5f7'; 
-var highColor = '#22023d'; 
+var lowColor = '#d5b1e3'; 
+var highColor = '#35014a'; 
 
 var projection = d3.geoAlbersUsa()
   .translate([width/2, height/2])
@@ -71,7 +71,7 @@ d3.csv("https://raw.githubusercontent.com/YueMenaYang/EDAVFinalProj/refs/heads/m
       })
       .on("mouseout", tip.hide);
   
-    //legend (not necessary)
+    //legend
     var w = 140;
     var h = 300;
     var key = d3.select("div#plot")
