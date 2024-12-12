@@ -8,10 +8,6 @@ This repository is the Exploratory Data Analysis and Visualization (EDAV) Final 
 1. [Project Overview](#project-overview)
 2. [Folder Structure](#folder-structure)
 3. [Setup and Installation](#setup-and-installation)
-4. [Data Preparation](#data-preparation)
-5. [Analysis Scripts](#analysis-scripts)
-6. [Interactive Visualizations](#interactive-visualizations)
-7. [Results and Conclusions](#results-and-conclusions)
 
 ---
 
